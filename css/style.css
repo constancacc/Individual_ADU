@@ -1,11 +1,56 @@
 body {
     font-family: Verdana, sans-serif;
+    background-color: rgb(54, 92, 140);
   }
+
+.card{
+    display: flex;
+    background-color: white;
+    padding: 3%;
+    border-radius: 2vw;
+    width: 80%;
+    margin: auto;
+}
+
+.card-image{
+    width: 80%;
+    border-radius: 2vw;
+    margin: auto;
+}
+
+.card-title{
+    width: 90%;
+    
+}
+
+p{
+    display: inline;
+    margin: 0 auto;
+    font-size: large;
+    line-height: 2vw;
+}
+
+.card-content{
+    position: relative;
+    width:50%;
+}
+#text-box{
+    padding-left: 5vw;
+    width: 45%;
+}
+.card-content:nth-child(2){
+    background-color: rgb(221, 19, 150);
+}
+
+.vertical-line {
+    width: 1px; /* Largura da linha vertical */
+    background-color: rgb(54, 92, 140); /* Cor da linha vertical */
+    height: auto; /* Altura da linha igual à altura do card */
+}
+
 .highlight {
     border-radius: 5px;
     padding: 2px;
+    font-weight: 600;
     background-color: #e0f7fa;
-}
-p{
-    display: inline;
 }
