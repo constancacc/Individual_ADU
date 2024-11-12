@@ -28,8 +28,8 @@ body {
 p{
     display: inline;
     margin: 0 auto;
-   /* font-size: large;*/
     line-height: 2vw;
+    
 }
 
 .card-content{
@@ -58,5 +58,4 @@ p{
     padding: 2px;
     font-weight: 600;
     background-color: #e0f7fa;
-    font-size: larger;
 }

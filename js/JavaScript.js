@@ -22,6 +22,9 @@ function lerTextoCard(botao) {
             utterance.rate = 1; // Velocidade da fala
         });
 
+        let currentIndex = 0;
+        let isPlaying = false; // Controla o estado de leitura
+
         // Função para adicionar e remover destaque
         function highlightElement(element) {
             element.classList.add('highlight');
@@ -31,17 +34,22 @@ function lerTextoCard(botao) {
             element.classList.remove('highlight');
         }
 
-        // Função para iniciar a leitura em sequência
-        function startSequentialReading(index = 0) {
-            if (index < utterances.length) {
-                const { element, utterance } = utterances[index];
+        // Função para iniciar a leitura do elemento atual
+        function startReadingCurrent() {
+            if (currentIndex >= 0 && currentIndex < utterances.length) {
+                const { element, utterance } = utterances[currentIndex];
 
                 // Adiciona destaque no início e remove no final
                 utterance.onstart = () => highlightElement(element);
                 utterance.onend = () => {
                     removeHighlight(element);
-                    // Continua para o próximo item na sequência
-                    startSequentialReading(index + 1);
+                    currentIndex++;
+                    // Continua automaticamente para o próximo elemento, se houver
+                    if (currentIndex < utterances.length && isPlaying) {
+                        startReadingCurrent();
+                    } else {
+                        togglePlayPause(); // Muda o botão para "Play" quando terminar
+                    }
                 };
 
                 // Inicia a leitura do utterance atual
@@ -49,9 +57,61 @@ function lerTextoCard(botao) {
             }
         }
 
-        // Inicia a leitura sequencial a partir do primeiro item
-        startSequentialReading();
+        // Função para alternar entre play/pause
+        function togglePlayPause() {
+            if (isPlaying) {
+                stopReading(); // Pausa a leitura
+                playPauseButton.textContent = "Play";
+            } else {
+                startReadingCurrent(); // Retoma a leitura
+                playPauseButton.textContent = "Pause";
+            }
+            isPlaying = !isPlaying;
+        }
 
+        // Função para parar a leitura
+        function stopReading() {
+            window.speechSynthesis.cancel();
+            if (currentIndex >= 0 && currentIndex < utterances.length) {
+                removeHighlight(utterances[currentIndex].element);
+            }
+        }
+
+        // Função para avançar para o próximo elemento
+        function nextElement() {
+            stopReading();
+            currentIndex = Math.min(currentIndex + 1, utterances.length - 1);
+            if (isPlaying) startReadingCurrent();
+        }
+
+        // Função para voltar ao elemento anterior
+        function previousElement() {
+            stopReading();
+            currentIndex = Math.max(currentIndex - 1, 0);
+            if (isPlaying) startReadingCurrent();
+        }
+
+        // Cria o container e os botões de controle
+        const controlContainer = document.createElement('div');
+        controlContainer.className = "controls";
+
+        const playPauseButton = document.createElement('button');
+        playPauseButton.textContent = "Play";
+        playPauseButton.onclick = togglePlayPause;
+
+        const btnNext = document.createElement('button');
+        btnNext.textContent = "Next";
+        btnNext.onclick = nextElement;
+
+        const btnPrevious = document.createElement('button');
+        btnPrevious.textContent = "Previous";
+        btnPrevious.onclick = previousElement;
+
+        // Adiciona os botões de controle ao container e ao card
+        controlContainer.appendChild(btnPrevious);
+        controlContainer.appendChild(playPauseButton);
+        controlContainer.appendChild(btnNext);
+        card.appendChild(controlContainer);
     } else {
         alert("Desculpe, seu navegador não suporta leitura de texto.");
     }
