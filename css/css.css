@@ -1,7 +1,7 @@
 /*----------- index 2.html --------------*/
 
 :root {
-    --breadcrumb-color: #007BFF; /* Cor do breadcrumb */
+    --breadcrumb-color: #b6d3f2; /* Cor do breadcrumb */
 }
 
 body {
@@ -21,10 +21,11 @@ nav[aria-label="breadcrumb"] ol {
   nav[aria-label="breadcrumb"] li+li:before {
     content: ">";
     padding: 0 0.5vw;
+    color:var(--breadcrumb-color);
   }
   
   nav[aria-label="breadcrumb"] a {
-    color:var(--breadcrumb-color);;
+    color:var(--breadcrumb-color);
     text-decoration: none;
   }
   
@@ -67,7 +68,6 @@ nav[aria-label="breadcrumb"] ol {
   #screen-reader-page-btn {
     margin-top: 1em; /* Espaço entre o card e o botão */
     font-size: large; /* Mesmo tamanho de fonte do título */
-    color: var(--breadcrumb-color); /* Mesma cor do breadcrumb */
     background: white;
     border-radius: 1vw;
     border:none;
@@ -95,8 +95,9 @@ nav[aria-label="breadcrumb"] ol {
 .card-text {
   margin: 10px 0;
   max-width: 600px;
-  font-size: 1.2em;
+  font-size: larger;
   line-height: 1.5;
+  color: white;
 }
 
 
@@ -104,8 +105,13 @@ nav[aria-label="breadcrumb"] ol {
   margin-top: 20px;
 }
 
+section{
+  position:relative;
+}
 
 .button-container {
+  position:absolute;
+  bottom:0;
   display: flex;
   gap: 15px; 
   align-items: center;
