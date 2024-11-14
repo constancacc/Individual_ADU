@@ -9,7 +9,7 @@ body {
     background-color: rgb(54, 92, 140);
   }
 
-/*BREADCRUMB*/
+/*----BREADCRUMB-----*/
 
 nav[aria-label="breadcrumb"] ol {
     display: flex;  
@@ -41,6 +41,7 @@ nav[aria-label="breadcrumb"] ol {
     justify-content: center;
 }
 
+ /*---- HOME ------*/
   .card{
     position:relative;
     background-color: white;
@@ -78,3 +79,50 @@ nav[aria-label="breadcrumb"] ol {
         background:var(--breadcrumb-color);
         color: white;
     }
+
+ /*---- Reader ------*/
+ 
+.reader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  text-align: center;
+}
+
+
+.card-text {
+  margin: 10px 0;
+  max-width: 600px;
+  font-size: 1.2em;
+  line-height: 1.5;
+}
+
+
+#link-text {
+  margin-top: 20px;
+}
+
+
+.button-container {
+  display: flex;
+  gap: 15px; 
+  align-items: center;
+  margin-top: 20px;
+}
+
+
+button img {
+  width: 40px; 
+  height: 40px;
+  cursor: pointer;
+}
+
+
+button {
+  border: none;
+  background: none;
+  padding: 0;
+}
+    

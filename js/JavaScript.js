@@ -1,60 +1,116 @@
 function lerTextoCard() {
     if ('speechSynthesis' in window) {
         const section = document.querySelector('.reader');
-        const textos = section.querySelectorAll('.card-text'); // Seleciona todos os elementos com a classe 'card-text'
+        const textos = section.querySelectorAll('.card-text');
+        const linkText = document.getElementById('link-text');
 
-        let currentIndex = 0; // Inicia com o primeiro parágrafo
-        let isPlaying = false; // Controla se está tocando ou pausado
-        const playPauseButton = document.querySelector('.play-pause');
+        let currentIndex = 0;
+        let isPlaying = false;
 
-        // Função para exibir o próximo parágrafo
-        function showNextText() {
+        const playPauseButton = document.querySelector('.play-pause img');
+        const nextButton = document.querySelector('.next');
+        const previousButton = document.querySelector('.previous');
+
+        // Esconde todos os textos inicialmente
+        function hideAllTexts() {
+            textos.forEach(texto => texto.style.display = 'none');
+            linkText.style.display = 'none';
+        }
+
+        // Função que lê o texto atual
+        function readCurrentText() {
             if (currentIndex < textos.length) {
-                // Mostra o texto atual
+                hideAllTexts();
                 textos[currentIndex].style.display = 'block';
 
-                // Cria a "utterance" para a fala
                 const utterance = new SpeechSynthesisUtterance(textos[currentIndex].textContent);
-                utterance.lang = 'en-US'; // Define o idioma para inglês
-                utterance.rate = 1; // Velocidade da fala
+                utterance.lang = 'en-US';
+                utterance.rate = 1;
 
-                // Quando terminar de ler o parágrafo, oculta o texto e avança para o próximo
                 utterance.onend = () => {
-                    textos[currentIndex].style.display = 'none'; // Oculta o texto lido
-                    currentIndex++; // Avança para o próximo índice
-                    showNextText(); // Continua com a leitura do próximo parágrafo
+                    textos[currentIndex].style.display = 'none';
+                    currentIndex++;
+                    
+                    // Só avança automaticamente se estiver no modo "Play"
+                    if (isPlaying && currentIndex < textos.length) {
+                        readCurrentText();
+                    } else if (currentIndex >= textos.length) {
+                        showFinalLink(); // Mostra o link no final
+                    }
                 };
 
-                // Inicia a leitura do próximo parágrafo
                 window.speechSynthesis.speak(utterance);
-            } else {
-                // Se acabou os textos, define o botão de Play/Pause como "Play"
-                playPauseButton.textContent = "Play"; 
-                isPlaying = false;
             }
         }
 
-        // Função para alternar play/pause
+        // Função para mostrar o link final
+        function showFinalLink() {
+            stopReading();
+            linkText.style.display = 'block';
+        }
+
+        // Avança para o próximo texto e pausa
+        function nextText() {
+            stopReading();
+            if (currentIndex < textos.length - 1) {
+                textos[currentIndex].style.display = 'none';
+                currentIndex++;
+                textos[currentIndex].style.display = 'block';
+            }
+        }
+
+        // Volta para o texto anterior e pausa
+        function previousText() {
+            stopReading();
+            if (currentIndex > 0) {
+                textos[currentIndex].style.display = 'none';
+                currentIndex--;
+                textos[currentIndex].style.display = 'block';
+            }
+        }
+
+        // Alterna entre Play e Pause
         function togglePlayPause() {
             if (isPlaying) {
                 stopReading();
-                playPauseButton.textContent = "Play";
+                playPauseButton.src = "../img/play.png";
+                playPauseButton.alt = "Play";
             } else {
-                showNextText(); // Começa a ler os parágrafos
                 isPlaying = true;
-                playPauseButton.textContent = "Pause";
+                playPauseButton.src = "../img/pause.png";
+                playPauseButton.alt = "Pause";
+                readCurrentText();
             }
         }
 
-        // Função para parar a leitura
+        // Para a leitura em andamento
         function stopReading() {
-            window.speechSynthesis.cancel(); // Cancela a leitura em andamento
+            window.speechSynthesis.cancel();
             isPlaying = false;
-            playPauseButton.textContent = "Play"; // Reverte para "Play" após parar
+            playPauseButton.src = "../img/play.png";
+            playPauseButton.alt = "Play";
         }
 
-        // Inicializa a leitura quando o botão de play/pause for clicado
-        playPauseButton.addEventListener('click', togglePlayPause);
+        // Função para ativar o clique nos botões usando Enter ou Espaço
+        function handleKeyboardEvent(event, action) {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                action();
+            }
+        }
+
+        // Eventos de clique e teclado para acessibilidade
+        playPauseButton.parentNode.addEventListener('click', togglePlayPause);
+        playPauseButton.parentNode.addEventListener('keydown', (event) => handleKeyboardEvent(event, togglePlayPause));
+
+        nextButton.addEventListener('click', nextText);
+        nextButton.addEventListener('keydown', (event) => handleKeyboardEvent(event, nextText));
+
+        previousButton.addEventListener('click', previousText);
+        previousButton.addEventListener('keydown', (event) => handleKeyboardEvent(event, previousText));
+
+        hideAllTexts();
+        textos[currentIndex].style.display = 'block';
     } else {
         alert("Desculpe, seu navegador não suporta leitura de texto.");
     }

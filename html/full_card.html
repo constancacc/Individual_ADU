@@ -4,19 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <title>Redesign do Persona Card 12</title>
 </head>
 
 <body>
     <main>
-        <!-- Botão para ativar o Text-to-Speech -->
-        <button onclick="lerTextoCard(this)" aria-label="Ouvir descrição do card">🔊 Ouvir</button>
-
         <article class="card" aria-labelledby="card-title">
             <div class="card-content">
                 <!-- Imagem do card -->
-                <img src="image.jpg" alt="Middle Schooler with ADHD and dyslexia on a computer" class="card-image">
+                <img src="../img/image.jpg" alt="Middle Schooler with ADHD and dyslexia on a computer" class="card-image">
                 <h1 id="card-title" class="card-title">Middle School Student with attention deficit hyperactivity disorder and dyslexia</h1>
             </div>
 
@@ -45,8 +42,14 @@
 
             
         </article>
+
+       <div class="button-container">
+    <button class="previous"><img src="../img/Skip Back.png" alt="Previous" /></button>
+    <button class="play-pause" tabindex="0"><img src="../img/Play.png" alt="Play" /></button>
+    <button class="next"><img src="../img/Skip Fwd.png" alt="Next" /></button>
+</div>
     </main>
-    <script src="js/varrimento.js"></script>
+    <script src="../js/varrimento.js"></script>
 </body>
 </html>
     

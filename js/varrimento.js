@@ -1,10 +1,9 @@
-// Função para ler o texto da seção com destaque dinâmico
 function lerTextoCard() {
     // Verifica se o navegador suporta Speech Synthesis
     if ('speechSynthesis' in window) {
-        // Seleciona o elemento da seção
-        const section = document.querySelector('.reader');
-        const textos = section.querySelectorAll('.card-text'); // Seleciona todos os elementos <p> da descrição
+        // Seleciona os elementos de texto que irão ser lidos
+        const section = document.querySelector('#text-box');
+        const textos = section.querySelectorAll('.card-text'); // Seleciona os elementos <p> da descrição
 
         // Cria uma lista de utterances com cada frase da descrição
         const utterances = Array.from(textos).map(texto => {
@@ -17,14 +16,15 @@ function lerTextoCard() {
             utterance.rate = 1; // Velocidade da fala
         });
 
-        let currentIndex = 0;
+        let currentIndex = 0; // Índice atual da leitura
         let isPlaying = false; // Controla o estado de leitura
 
-        // Função para adicionar e remover destaque
+        // Função para adicionar o destaque ao texto
         function highlightElement(element) {
             element.classList.add('highlight');
         }
 
+        // Função para remover o destaque do texto
         function removeHighlight(element) {
             element.classList.remove('highlight');
         }
@@ -35,8 +35,10 @@ function lerTextoCard() {
                 const utterance = utterances[currentIndex];
                 const element = textos[currentIndex];
 
-                // Adiciona destaque no início e remove no final
-                utterance.onstart = () => highlightElement(element);
+                // Adiciona destaque no início
+                highlightElement(element);
+
+                // Quando terminar de ler, remove o destaque e avança para o próximo texto
                 utterance.onend = () => {
                     removeHighlight(element);
                     currentIndex++;
@@ -55,12 +57,15 @@ function lerTextoCard() {
 
         // Função para alternar entre play/pause
         function togglePlayPause() {
+            const playPauseButton = document.querySelector('.play-pause img');
             if (isPlaying) {
                 stopReading(); // Pausa a leitura
-                playPauseButton.textContent = "Play";
+                playPauseButton.src = "../img/Play.png"; // Troca a imagem para "Play"
+                playPauseButton.alt = "Play"; // Troca o alt para "Play"
             } else {
                 startReadingCurrent(); // Retoma a leitura
-                playPauseButton.textContent = "Pause";
+                playPauseButton.src = "../img/Pause.png"; // Troca a imagem para "Pause"
+                playPauseButton.alt = "Pause"; // Troca o alt para "Pause"
             }
             isPlaying = !isPlaying;
         }
@@ -69,8 +74,12 @@ function lerTextoCard() {
         function stopReading() {
             window.speechSynthesis.cancel();
             if (currentIndex >= 0 && currentIndex < utterances.length) {
-                removeHighlight(textos[currentIndex]);
+                removeHighlight(textos[currentIndex]); // Remove o highlight da frase atual
             }
+            isPlaying = false;
+            const playPauseButton = document.querySelector('.play-pause img');
+            playPauseButton.src = "../img/Play.png"; // Troca a imagem de volta para "Play"
+            playPauseButton.alt = "Play"; // Troca o alt para "Play"
         }
 
         // Função para avançar para o próximo elemento
@@ -88,14 +97,14 @@ function lerTextoCard() {
         }
 
         // Seleciona os botões existentes
-        const playPauseButton = document.querySelector('.play-pause');
+        const playPauseButton = document.querySelector('.play-pause img');
         const btnNext = document.querySelector('.next');
         const btnPrevious = document.querySelector('.previous');
 
         // Associa as funções aos botões
-        playPauseButton.onclick = togglePlayPause;
-        btnNext.onclick = nextElement;
-        btnPrevious.onclick = previousElement;
+        playPauseButton.parentNode.onclick = togglePlayPause; // Play/Pause
+        btnNext.onclick = nextElement; // Next
+        btnPrevious.onclick = previousElement; // Previous
     } else {
         alert("Desculpe, seu navegador não suporta leitura de texto.");
     }
