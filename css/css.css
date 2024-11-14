@@ -1,0 +1,80 @@
+/*----------- index 2.html --------------*/
+
+:root {
+    --breadcrumb-color: #007BFF; /* Cor do breadcrumb */
+}
+
+body {
+    font-family: Verdana, sans-serif;
+    background-color: rgb(54, 92, 140);
+  }
+
+/*BREADCRUMB*/
+
+nav[aria-label="breadcrumb"] ol {
+    display: flex;  
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  nav[aria-label="breadcrumb"] li+li:before {
+    content: ">";
+    padding: 0 0.5vw;
+  }
+  
+  nav[aria-label="breadcrumb"] a {
+    color:var(--breadcrumb-color);;
+    text-decoration: none;
+  }
+  
+  nav[aria-label="breadcrumb"] li {
+    padding: 0.5vw 0;
+  }
+
+  /*---- MAIN ------*/
+
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+  .card{
+    position:relative;
+    background-color: white;
+    padding: 4.5vw 3vw;
+    width: 20%;
+    border-radius: 2vw;
+    margin-top: 3vw;
+  }
+
+  #card-title{
+    width: 20vw;
+    font-weight:100;
+    font-size: large;
+    text-align:center;
+    margin-top: 3vw;
+  }
+
+  .card-image{
+    width: 20vw;
+    border-radius: 2vw;
+  }
+
+  #screen-reader-page-btn {
+    margin-top: 1em; /* Espaço entre o card e o botão */
+    font-size: large; /* Mesmo tamanho de fonte do título */
+    color: var(--breadcrumb-color); /* Mesma cor do breadcrumb */
+    background: white;
+    border-radius: 1vw;
+    border:none;
+    padding: 1vw;
+    cursor: pointer;
+    }
+
+    #screen-reader-page-btn:hover{
+        background:var(--breadcrumb-color);
+        color: white;
+    }

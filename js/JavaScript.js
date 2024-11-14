@@ -1,140 +1,64 @@
-// Função para ler o texto do card com destaque dinâmico
-function lerTextoCard(botao) {
-    // Verifica se o navegador suporta Speech Synthesis
+function lerTextoCard() {
     if ('speechSynthesis' in window) {
-        // Seleciona o elemento do card
-        const card = botao.closest('main');
-        const titulo = card.querySelector('.card-title');
-        const textos = card.querySelectorAll('.card-text'); // Seleciona todos os elementos <p> da descrição
+        const section = document.querySelector('.reader');
+        const textos = section.querySelectorAll('.card-text'); // Seleciona todos os elementos com a classe 'card-text'
 
-        // Cria uma lista de utterances com o título e cada frase da descrição
-        const utterances = [
-            { element: titulo, utterance: new SpeechSynthesisUtterance(titulo.textContent) }
-        ];
+        let currentIndex = 0; // Inicia com o primeiro parágrafo
+        let isPlaying = false; // Controla se está tocando ou pausado
+        const playPauseButton = document.querySelector('.play-pause');
 
-        textos.forEach(texto => {
-            utterances.push({ element: texto, utterance: new SpeechSynthesisUtterance(texto.textContent) });
-        });
+        // Função para exibir o próximo parágrafo
+        function showNextText() {
+            if (currentIndex < textos.length) {
+                // Mostra o texto atual
+                textos[currentIndex].style.display = 'block';
 
-        // Configurações para cada utterance
-        utterances.forEach(({ utterance }) => {
-            utterance.lang = 'en-US'; // Define o idioma para inglês
-            utterance.rate = 1; // Velocidade da fala
-        });
+                // Cria a "utterance" para a fala
+                const utterance = new SpeechSynthesisUtterance(textos[currentIndex].textContent);
+                utterance.lang = 'en-US'; // Define o idioma para inglês
+                utterance.rate = 1; // Velocidade da fala
 
-        let currentIndex = 0;
-        let isPlaying = false; // Controla o estado de leitura
-
-        // Função para adicionar e remover destaque
-        function highlightElement(element) {
-            element.classList.add('highlight');
-        }
-
-        function removeHighlight(element) {
-            element.classList.remove('highlight');
-        }
-
-        // Função para iniciar a leitura do elemento atual
-        function startReadingCurrent() {
-            if (currentIndex >= 0 && currentIndex < utterances.length) {
-                const { element, utterance } = utterances[currentIndex];
-
-                // Adiciona destaque no início e remove no final
-                utterance.onstart = () => highlightElement(element);
+                // Quando terminar de ler o parágrafo, oculta o texto e avança para o próximo
                 utterance.onend = () => {
-                    removeHighlight(element);
-                    currentIndex++;
-                    // Continua automaticamente para o próximo elemento, se houver
-                    if (currentIndex < utterances.length && isPlaying) {
-                        startReadingCurrent();
-                    } else {
-                        togglePlayPause(); // Muda o botão para "Play" quando terminar
-                    }
+                    textos[currentIndex].style.display = 'none'; // Oculta o texto lido
+                    currentIndex++; // Avança para o próximo índice
+                    showNextText(); // Continua com a leitura do próximo parágrafo
                 };
 
-                // Inicia a leitura do utterance atual
+                // Inicia a leitura do próximo parágrafo
                 window.speechSynthesis.speak(utterance);
+            } else {
+                // Se acabou os textos, define o botão de Play/Pause como "Play"
+                playPauseButton.textContent = "Play"; 
+                isPlaying = false;
             }
         }
 
-        // Função para alternar entre play/pause
+        // Função para alternar play/pause
         function togglePlayPause() {
             if (isPlaying) {
-                stopReading(); // Pausa a leitura
+                stopReading();
                 playPauseButton.textContent = "Play";
             } else {
-                startReadingCurrent(); // Retoma a leitura
+                showNextText(); // Começa a ler os parágrafos
+                isPlaying = true;
                 playPauseButton.textContent = "Pause";
             }
-            isPlaying = !isPlaying;
         }
 
         // Função para parar a leitura
         function stopReading() {
-            window.speechSynthesis.cancel();
-            if (currentIndex >= 0 && currentIndex < utterances.length) {
-                removeHighlight(utterances[currentIndex].element);
-            }
+            window.speechSynthesis.cancel(); // Cancela a leitura em andamento
+            isPlaying = false;
+            playPauseButton.textContent = "Play"; // Reverte para "Play" após parar
         }
 
-        // Função para avançar para o próximo elemento
-        function nextElement() {
-            stopReading();
-            currentIndex = Math.min(currentIndex + 1, utterances.length - 1);
-            if (isPlaying) startReadingCurrent();
-        }
-
-        // Função para voltar ao elemento anterior
-        function previousElement() {
-            stopReading();
-            currentIndex = Math.max(currentIndex - 1, 0);
-            if (isPlaying) startReadingCurrent();
-        }
-
-        // Cria o container e os botões de controle
-        const controlContainer = document.createElement('div');
-        controlContainer.className = "controls";
-
-        const playPauseButton = document.createElement('button');
-        playPauseButton.textContent = "Play";
-        playPauseButton.onclick = togglePlayPause;
-
-        const btnNext = document.createElement('button');
-        btnNext.textContent = "Next";
-        btnNext.onclick = nextElement;
-
-        const btnPrevious = document.createElement('button');
-        btnPrevious.textContent = "Previous";
-        btnPrevious.onclick = previousElement;
-
-        // Adiciona os botões de controle ao container e ao card
-        controlContainer.appendChild(btnPrevious);
-        controlContainer.appendChild(playPauseButton);
-        controlContainer.appendChild(btnNext);
-        card.appendChild(controlContainer);
+        // Inicializa a leitura quando o botão de play/pause for clicado
+        playPauseButton.addEventListener('click', togglePlayPause);
     } else {
         alert("Desculpe, seu navegador não suporta leitura de texto.");
     }
 }
 
-/* -------------- BreadCrumb ------------------
-// Adding an event listener to update breadcrumbs dynamically
-
-document.addEventListener(DOMContentLoaded, function() {
-
-    var breadcrumbs = document.querySelector('[aria-label="breadcrumb"]');
-  
-    // Update breadcrumb items based on navigation
-  
-    updateBreadcrumbs(breadcrumbs);
-  
-  });
-  
-  function updateBreadcrumbs(breadcrumbs) {
-  
-    // Dynamic update logic here
-  
-    breadcrumbs.innerHTML = '<li><a href="/home">Home</a></li><li><a href="/dynamic">Dynamic</a></li><li aria-current="page">Current Page</li>';
-  
-  }
-    */
+// Inicializa a função quando a página for carregada
+document.addEventListener('DOMContentLoaded', lerTextoCard);
