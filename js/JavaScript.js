@@ -116,3 +116,25 @@ function lerTextoCard(botao) {
         alert("Desculpe, seu navegador não suporta leitura de texto.");
     }
 }
+
+/* -------------- BreadCrumb ------------------
+// Adding an event listener to update breadcrumbs dynamically
+
+document.addEventListener(DOMContentLoaded, function() {
+
+    var breadcrumbs = document.querySelector('[aria-label="breadcrumb"]');
+  
+    // Update breadcrumb items based on navigation
+  
+    updateBreadcrumbs(breadcrumbs);
+  
+  });
+  
+  function updateBreadcrumbs(breadcrumbs) {
+  
+    // Dynamic update logic here
+  
+    breadcrumbs.innerHTML = '<li><a href="/home">Home</a></li><li><a href="/dynamic">Dynamic</a></li><li aria-current="page">Current Page</li>';
+  
+  }
+    */

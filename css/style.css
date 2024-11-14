@@ -59,3 +59,30 @@ p{
     font-weight: 600;
     background-color: #e0f7fa;
 }
+
+
+
+/*----------- index 2.html --------------*/
+
+/*BREADCRUMB*/
+
+nav[aria-label=”breadcrumb”] ol {
+    display: flex;  
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  nav[aria-label=”breadcrumb”] li+li:before {
+    content: ">";
+    padding: 0 0.5vw;
+  }
+  
+  nav[aria-label=”breadcrumb”] a {
+    color: #007BFF;
+    text-decoration: none;
+  }
+  
+  nav[aria-label=”breadcrumb”] li {
+    padding: 0.5vw 0;
+  }
