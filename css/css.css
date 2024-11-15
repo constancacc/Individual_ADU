@@ -2,15 +2,16 @@
 
 :root {
     --breadcrumb-color: #b6d3f2; /* Cor do breadcrumb */
+    --background: rgb(54, 92, 140);
 }
 
 body {
     font-family: Verdana, sans-serif;
-    background-color: rgb(54, 92, 140);
+    background-color: var(--background);
+    font-size: 19px;
   }
 
 /*----BREADCRUMB-----*/
-
 nav[aria-label="breadcrumb"] ol {
     display: flex;  
     list-style: none;
@@ -118,17 +119,75 @@ section{
   margin-top: 20px;
 }
 
-
-button img {
-  width: 40px; 
-  height: 40px;
+/*tamanhos dos botões*/
+button img,a img {
+  width: 60px; 
+  height: 60px;
   cursor: pointer;
 }
-
 
 button {
   border: none;
   background: none;
   padding: 0;
 }
-    
+
+/*Footer*/
+footer{
+  position:absolute;
+  bottom:2vh;
+  display: block;
+  width: 99%;
+}
+#settings{
+  position:absolute;
+  right:1vw;
+}
+
+
+.reader-settings {
+  display: flex;
+  flex-direction: column; 
+  gap: 5px; 
+  background-color: var(--breadcrumb-color);
+  border-radius: 1vw;
+  padding: 1vw;
+  width: 12%;
+}
+
+.reader-settings > h1 {
+  font-weight: 200;
+  font-size: 20px;
+  text-align: center;
+}
+
+/* Layout de duas colunas */
+.reader-settings .button-group {
+  display: flex;
+  justify-content: space-between; /* Botões nas extremidades */
+  gap: 10px; /* Espaço entre os botões */
+}
+
+/* Botões padrão */
+.reader-settings button {
+  background: var(--background);
+  color: white;
+  width: 80px;
+  height: 80px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Botão com largura dupla */
+.reader-settings > button.double-width {
+  width: 100%;
+  height: inherit;
+  padding: 1vw;
+  text-align: center;
+  color: var(--background);
+  background-color: white;
+
+}
+

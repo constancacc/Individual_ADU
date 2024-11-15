@@ -118,3 +118,64 @@ function lerTextoCard() {
 
 // Inicializa a função quando a página for carregada
 document.addEventListener('DOMContentLoaded', lerTextoCard);
+
+
+/*--------- botões das settings-----------------*/
+
+// Selecionar os botões
+const increaseButton = document.querySelector('#mais-tamanho');
+const decreaseButton = document.querySelector('#menos-tamanho');
+
+// Selecionar os textos da seção "reader"
+const textElements = document.querySelectorAll('.reader .card-text');
+
+// Definir tamanho inicial e limites
+let currentFontSize = 19; // Tamanho padrão (em px)
+const minFontSize = 16; // Tamanho mínimo permitido
+const maxFontSize = 32; // Tamanho máximo permitido
+
+// Função para ajustar o tamanho da fonte
+function adjustFontSize(change) {
+    currentFontSize += change;
+
+    // Garantir que o tamanho esteja dentro dos limites
+    if (currentFontSize < minFontSize) currentFontSize = minFontSize;
+    if (currentFontSize > maxFontSize) currentFontSize = maxFontSize;
+
+    // Aplicar o novo tamanho aos elementos de texto
+    textElements.forEach((element) => {
+        element.style.fontSize = `${currentFontSize}px`;
+    });
+}
+
+// Adicionar eventos de clique aos botões
+increaseButton.addEventListener('click', () => adjustFontSize(2)); // Aumentar tamanho
+decreaseButton.addEventListener('click', () => adjustFontSize(-2)); // Diminuir tamanho
+
+/*------ MUDAR A FONTE -----------*/
+const changeFontButton = document.querySelector('.double-width');
+const fontNameElement = document.querySelector('#font-name');
+
+
+// Lista de fontes
+const fonts = ['Tahoma', 'Calibri', 'Helvetica', 'Arial', 'Verdana', 'Times New Roman'];
+
+// Índice atual
+let currentFontIndex = 0;
+
+// Função para mudar a fonte
+function changeFont() {
+    // Atualizar o índice da fonte
+    currentFontIndex = (currentFontIndex + 1) % fonts.length; // Alterna entre 0 e o tamanho da lista
+
+    // Aplicar a nova fonte nos elementos de texto
+    textElements.forEach((element) => {
+        element.style.fontFamily = fonts[currentFontIndex];
+    });
+
+    // Atualizar o nome da fonte no elemento abaixo do botão
+    fontNameElement.textContent = `Current font: ${fonts[currentFontIndex]}`;
+}
+
+// Adicionar o evento de clique ao botão
+changeFontButton.addEventListener('click', changeFont);
