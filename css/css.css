@@ -84,6 +84,10 @@ nav[aria-label="breadcrumb"] ol {
  /*---- READER ----------------*/
  
 .reader {
+  
+}
+
+.reader-section{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -216,4 +220,57 @@ filter:opacity(0.5);
 .reader-settings button.double-width:hover{
   background-color: var(--background);
   color: white;
+}
+
+
+/*---FULL CARD---*/
+.full-card{
+  display: flex;
+  background-color: white;
+  padding: 3%;
+  border-radius: 2vw;
+  width: 70%;
+  margin: 2vw auto;
+}
+
+.full-card-image{
+  width: 70%;
+  border-radius: 2vw;
+  margin: auto;
+}
+
+.full-card-title{
+  width: 90%;
+}
+
+.full-card-content > p{
+  font-size: 12px;
+  display: inline;
+  margin: 0 auto;
+  line-height: 2vw;
+  color: black;
+}
+
+.full-card-content{
+  position: relative;
+  width:50%;
+}
+
+#text-box{
+  padding-left: 5vw;
+  width: 45%;
+}
+
+.vertical-line {
+  width: 1px;
+  background-color: rgb(54, 92, 140);
+  height: auto;
+}
+
+/*--Text-to-Speech--*/
+.highlight {
+  border-radius: 5px;
+  padding: 2px;
+  font-weight: 600;
+  background-color: #e0f7fa;
 }

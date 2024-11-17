@@ -1,0 +1,101 @@
+<!-- Index da página -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/css.css">
+    <title>Redesign do Persona Card 12</title>
+</head>
+
+<body>
+    <!--BREADCRUMB-->
+    <header>
+        <nav aria-label="breadcrumb">
+            <ol>
+                <li><a href=../index.html>Home</a></li>
+                <li><a href=reader.html>Persona Card Reader</a></li>
+                <li><a href=full-reader.html>Full Persona Card Reader</a></li>
+            </ol>
+        </nav>
+    </header>
+
+
+    <main>
+        <!--READER-->
+        <article class="full-card reader" aria-labelledby="card-title">
+            <div class="full-card-content">
+                <!-- Imagem do card -->
+                <img src="../img/image.jpg" alt="Middle Schooler with ADHD and dyslexia on a computer" class="full-card-image">
+                <h1 id="full-card-title" class="card-title">Middle School Student with attention deficit hyperactivity disorder and dyslexia</h1>
+            </div>
+
+            <div class="vertical-line"></div>
+
+            <!-- Conteúdo do card -->
+            <div class="full-card-content" id="text-box">
+                <!-- Título do card -->
+                <!-- Texto do card -->
+                <p class="card-text full-card-p">Preety is a middle school student with attention deficit hyperactivity disorder with dyslexia.</p>
+                <p class="card-text full-card-p"> She as difficulty reading, but she enjoys her literature class.</p>
+                <p class="card-text full-card-p"> Her school started using online textbooks.</p>
+                <p class="card-text full-card-p"> She was initially worried about using this new format, but using text-to-speech software that
+                    highlights the text on the screen as it reads it aloud, she realized that she can focus on the content instead of stuggling
+                    over every word.</p>
+                <p class="card-text full-card-p"> The text-to-speech software helps with other online text; but, her experience with websites varies.</p>
+                <p class="card-text full-card-p"> Some sites use graphics in a way that helps her to focus on the content that she would like to read,
+                    while other sites have distracting advertisements and moving content.</p>
+                <p class="card-text full-card-p">She has problems with online content when the navigation is unclear, and prefers sites that have navigation
+                    cues including a navigation bar, search box, bread-crumb trails, and a sitemap.</p>
+                <p class="card-text full-card-p">Her school is using an acessible library catalog online.</p>
+                <p class="card-text full-card-p">Before it she had to go to the library to find books.</p>
+                <p class="card-text full-card-p">Now she can search the catalog using her phone, tablet, or laptop.</p>
+                <p class="card-text full-card-p">She struggles with spelling but the search feature that suggests alternative spellings and correct words is helpful.</p>
+            </div>
+
+            <div class="button-container">
+                <button class="previous"><img src="../img/Skip Back.png" alt="Previous" /></button>
+                <button class="play-pause" tabindex="0"><img src="../img/Play.png" alt="Play" /></button>
+                <button class="next"><img src="../img/Skip Fwd.png" alt="Next" /></button>
+            </div>
+            
+        </article>
+
+        <!--READER SETTINGS -->
+        <aside class="reader-settings">
+            <h1>Reader Settings</h1>
+            <h2>Text</h2>
+            
+            <!-- Botões lado a lado -->
+            <div class="button-group">
+              <button id="botao-mais-tamanho"><b id="menos-tamanho">aA</b><br>-</button>
+              <button id="botao-menos-tamanho"><b id="mais-tamanho">aA</b><br>+</button>
+            </div>
+            <p id="points">Size: 19px</p>
+            
+            <!-- Botão com largura dupla -->
+            <button class="double-width">Change Font</button>
+            <p id="font-name" aria-live="polite">Current font: Verdana</p>
+          
+            <h1>Reader Speed</h1>
+            
+            <!-- Outra dupla de botões lado a lado -->
+            <div class="button-group">
+              <button id="menos-speed">-</button>
+              <button id="mais-speed">+</button>
+            </div>
+          </aside>
+        
+
+    </main>
+    
+    <!--FOOTER-->
+    <footer>
+        <a href="../index.html" ><img src="../img/back.png" alt="back"></a>
+        <button id="settings"><img src="../img/Settings.png" alt="settings"></button>
+    </footer>
+    
+    <script src="../js/JavaScript.js"></script>
+</body>
+</html>
+    
