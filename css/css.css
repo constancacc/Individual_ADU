@@ -112,7 +112,7 @@ section{
 
 .button-container {
   position:absolute;
-  bottom:0;
+  bottom:2vw;
   display: flex;
   gap: 15px; 
   align-items: center;
@@ -136,15 +136,15 @@ button {
 
 /*---FULL CARD---*/
 .full-card{
-  padding: 3%;
-  border-radius: 2vw;
   width: 60%;
-  margin: 2vw auto;
+  margin-bottom: 5%;;
 }
 
 #full-card-title{
   color: white;
+  width:100%;
   text-align: left;
+  font-weight: 600;
 }
 
 .full-card-content > p{
@@ -172,13 +172,21 @@ button {
 /*-----------Footer------------------*/
 footer{
   position:absolute;
-  bottom:2vh;
+  bottom:0;
   display: block;
   width: 99%;
+  height: 1vw;
+}
+
+#back-btn{
+  position:absolute;
+  left:1vw;
+  bottom:0;
 }
 #settings{
   position:absolute;
   right:1vw;
+  bottom:0;
 }
 
 #settings.btn-pressed{
@@ -254,4 +262,3 @@ filter:opacity(0.5);
   background-color: var(--background);
   color: white;
 }
-
