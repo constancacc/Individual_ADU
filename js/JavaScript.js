@@ -1,3 +1,17 @@
+document.addEventListener('DOMContentLoaded', function () {
+    const settingsButton = document.getElementById('settings'); // Botão de configurações
+    const settingsAside = document.querySelector('.reader-settings'); // O aside das configurações
+
+    // Adiciona evento de clique ao botão de configurações
+    settingsButton.addEventListener('click', () => {
+        // Alterna a classe 'active' para o aside, fazendo-o aparecer ou desaparecer
+        settingsAside.classList.toggle('active');
+        settingsButton.classList.toggle('btn-pressed');
+    });
+});
+
+/*---------- TEXT-TO-SPEECH --------------------------------------------------------------------------------------*/
+
 function lerTextoCard() {
     if ('speechSynthesis' in window) {
         const section = document.querySelector('.reader');
@@ -6,10 +20,15 @@ function lerTextoCard() {
 
         let currentIndex = 0;
         let isPlaying = false;
+        let speechRate = 1; // Velocidade inicial da leitura
 
         const playPauseButton = document.querySelector('.play-pause img');
         const nextButton = document.querySelector('.next');
         const previousButton = document.querySelector('.previous');
+        const speedDisplay = document.createElement('p'); // Exibe a velocidade
+        speedDisplay.id = "speed-display";
+        speedDisplay.textContent = `Speed: ${speechRate.toFixed(1)}x`;
+        document.querySelector('.reader-settings').appendChild(speedDisplay);
 
         // Esconde todos os textos inicialmente
         function hideAllTexts() {
@@ -25,7 +44,7 @@ function lerTextoCard() {
 
                 const utterance = new SpeechSynthesisUtterance(textos[currentIndex].textContent);
                 utterance.lang = 'en-US';
-                utterance.rate = 1;
+                utterance.rate = speechRate; // Aplicar a velocidade ajustada
 
                 utterance.onend = () => {
                     textos[currentIndex].style.display = 'none';
@@ -111,6 +130,30 @@ function lerTextoCard() {
 
         hideAllTexts();
         textos[currentIndex].style.display = 'block';
+
+        /*------ CONTROLAR A VELOCIDADE -----------*/
+        const decreaseSpeedButton = document.querySelector('#menos-speed');
+        const increaseSpeedButton = document.querySelector('#mais-speed');
+
+        // Velocidade inicial e limites
+        const minRate = 0.5; // Velocidade mínima
+        const maxRate = 3; // Velocidade máxima
+
+        // Função para alterar a velocidade
+        function adjustSpeechRate(change) {
+            speechRate += change;
+
+            // Garantir que a velocidade esteja dentro dos limites
+            if (speechRate < minRate) speechRate = minRate;
+            if (speechRate > maxRate) speechRate = maxRate;
+
+            // Atualizar o texto de exibição da velocidade
+            speedDisplay.textContent = `Speed: ${speechRate.toFixed(1)}x`;
+        }
+
+        // Adicionar eventos de clique aos botões de velocidade
+        decreaseSpeedButton.addEventListener('click', () => adjustSpeechRate(-0.1)); // Diminuir velocidade
+        increaseSpeedButton.addEventListener('click', () => adjustSpeechRate(0.1)); // Aumentar velocidade
     } else {
         alert("Desculpe, seu navegador não suporta leitura de texto.");
     }
@@ -120,7 +163,8 @@ function lerTextoCard() {
 document.addEventListener('DOMContentLoaded', lerTextoCard);
 
 
-/*--------- botões das settings-----------------*/
+
+/*--------- botões das settings   -----------------*/
 
 // Selecionar os botões
 const increaseButton = document.querySelector('#botao-menos-tamanho');
@@ -157,8 +201,9 @@ function adjustFontSize(change) {
         }
         
     });
+    
 }
-
+console.log(currentFontSize);
 // Adicionar eventos de clique aos botões
 increaseButton.addEventListener('click', () => adjustFontSize(2)); // Aumentar tamanho
 decreaseButton.addEventListener('click', () => adjustFontSize(-2)); // Diminuir tamanho
@@ -190,3 +235,28 @@ function changeFont() {
 
 // Adicionar o evento de clique ao botão
 changeFontButton.addEventListener('click', changeFont);
+
+/*------ CONTROLAR A VELOCIDADE -----------*/
+const decreaseSpeedButton = document.querySelector('#menos-speed');
+const increaseSpeedButton = document.querySelector('#mais-speed');
+
+// Velocidade inicial e limites
+let speechRate = 1; // Velocidade padrão
+const minRate = 0.5; // Velocidade mínima
+const maxRate = 3; // Velocidade máxima
+
+// Função para alterar a velocidade
+function adjustSpeechRate(change) {
+    speechRate += change;
+
+    // Garantir que a velocidade esteja dentro dos limites
+    if (speechRate < minRate) speechRate = minRate;
+    if (speechRate > maxRate) speechRate = maxRate;
+
+    // Atualizar o texto de exibição da velocidade
+    document.querySelector('#speed-display').textContent = `Speed: ${speechRate.toFixed(1)}x`;
+}
+
+// Adicionar eventos de clique aos botões de velocidade
+decreaseSpeedButton.addEventListener('click', () => adjustSpeechRate(-0.1)); // Diminuir velocidade
+increaseSpeedButton.addEventListener('click', () => adjustSpeechRate(0.1)); // Aumentar velocidade

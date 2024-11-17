@@ -81,7 +81,7 @@ nav[aria-label="breadcrumb"] ol {
         color: white;
     }
 
- /*---- Reader ------*/
+ /*---- READER ----------------*/
  
 .reader {
   display: flex;
@@ -96,7 +96,7 @@ nav[aria-label="breadcrumb"] ol {
 .card-text {
   margin: 10px 0;
   max-width: 600px;
-  font-size: larger;
+  font-size: 19px;
   line-height: 1.5;
   color: white;
 }
@@ -132,7 +132,7 @@ button {
   padding: 0;
 }
 
-/*Footer*/
+/*-----------Footer------------------*/
 footer{
   position:absolute;
   bottom:2vh;
@@ -144,8 +144,13 @@ footer{
   right:1vw;
 }
 
+#settings.btn-pressed{
+filter:opacity(0.5);
+}
 
+/*POP-UP DAS SETTINGS*/
 .reader-settings {
+  visibility: hidden;
   display: flex;
   flex-direction: column; 
   gap: 5px; 
@@ -153,6 +158,12 @@ footer{
   border-radius: 1vw;
   padding: 1vw;
   width: 12%;
+
+  position: absolute;
+  right: 2vw;
+}
+.reader-settings.active {
+  visibility: visible;
 }
 
 .reader-settings > h2, .reader-settings > h1 {
