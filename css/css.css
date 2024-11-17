@@ -144,7 +144,6 @@ button {
   color: white;
   width:100%;
   text-align: left;
-  font-weight: 600;
 }
 
 .full-card-content > p{
@@ -172,7 +171,7 @@ button {
 /*-----------Footer------------------*/
 footer{
   position:absolute;
-  bottom:0;
+  bottom:0.5vw;
   display: block;
   width: 99%;
   height: 1vw;

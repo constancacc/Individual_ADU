@@ -10,28 +10,35 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Referências para os botões de aumentar e diminuir o tamanho do texto
-    const btnAumentar = document.getElementById('botao-menos-tamanho');
-    const btnDiminuir = document.getElementById('botao-mais-tamanho');
+    const btnAumentar = document.getElementById('botao-mais-tamanho');
+    const btnDiminuir = document.getElementById('botao-menos-tamanho');
     const pontos = document.getElementById('points'); // Mostra o tamanho atual da fonte
     const textosCard = document.querySelectorAll('.card-text'); // Seleciona todos os textos do card
 
     let tamanhoFonteAtual = 16; // Tamanho inicial da fonte (em px), você pode ajustar este valor se necessário
+    let familiaFonteAtual = 'Verdana'; // Família de fonte inicial
 
-    // Função para atualizar o tamanho da fonte
-    function atualizarTamanhoFonte() {
+    // Array de fontes disponíveis
+    const fontesDisponiveis = ['Verdana', 'Tahoma', 'Calibri', 'Helvetica', 'Arial', 'Times New Roman'];
+
+    // Função para atualizar o tamanho da fonte e a família de fontes
+    function atualizarFonte() {
         // Atualiza o tamanho de cada texto no card
         textosCard.forEach(texto => {
             texto.style.fontSize = `${tamanhoFonteAtual}px`;
+            texto.style.fontFamily = familiaFonteAtual; // Aplica a família de fonte
         });
         // Atualiza o texto que exibe o tamanho atual da fonte
         pontos.textContent = `Size: ${tamanhoFonteAtual}px`;
+        // Atualiza a exibição do nome da fonte
+        document.getElementById('font-name').textContent = `Current font: ${familiaFonteAtual}`;
     }
 
     // Função para aumentar o tamanho da fonte
     btnAumentar.addEventListener('click', function() {
-        if (tamanhoFonteAtual < 20) { // Impede que o tamanho da fonte ultrapasse 21px
+        if (tamanhoFonteAtual < 20) { // Impede que o tamanho da fonte ultrapasse 20px
             tamanhoFonteAtual += 1; // Aumenta 1px no tamanho
-            atualizarTamanhoFonte(); // Atualiza o tamanho da fonte
+            atualizarFonte(); // Atualiza o tamanho da fonte
         }
     });
 
@@ -39,12 +46,23 @@ document.addEventListener('DOMContentLoaded', function () {
     btnDiminuir.addEventListener('click', function() {
         if (tamanhoFonteAtual > 12) { // Impede que o tamanho da fonte fique abaixo de 12px
             tamanhoFonteAtual -= 1; // Diminui 1px no tamanho
-            atualizarTamanhoFonte(); // Atualiza o tamanho da fonte
+            atualizarFonte(); // Atualiza o tamanho da fonte
         }
     });
 
+    // Função para alternar a família de fontes
+    const btnTrocarFonte = document.querySelector('.double-width'); // Botão para trocar a fonte
+    btnTrocarFonte.addEventListener('click', function() {
+        // Encontrar o índice atual da fonte no array
+        let indiceFonteAtual = fontesDisponiveis.indexOf(familiaFonteAtual);
+        // Avança para a próxima fonte no array, e volta ao início quando atingir o final
+        indiceFonteAtual = (indiceFonteAtual + 1) % fontesDisponiveis.length;
+        familiaFonteAtual = fontesDisponiveis[indiceFonteAtual]; // Atualiza a família de fonte
+        atualizarFonte(); // Atualiza o tamanho da fonte e a família de fontes
+    });
+
     // Atualiza o tamanho inicial da fonte ao carregar a página
-    atualizarTamanhoFonte();
+    atualizarFonte();
 });
 
 function lerTextoCard() {
