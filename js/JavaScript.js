@@ -123,8 +123,9 @@ document.addEventListener('DOMContentLoaded', lerTextoCard);
 /*--------- botões das settings-----------------*/
 
 // Selecionar os botões
-const increaseButton = document.querySelector('#mais-tamanho');
-const decreaseButton = document.querySelector('#menos-tamanho');
+const increaseButton = document.querySelector('#botao-menos-tamanho');
+const decreaseButton = document.querySelector('#botao-mais-tamanho');
+const points = document.querySelector('#points');
 
 // Selecionar os textos da seção "reader"
 const textElements = document.querySelectorAll('.reader .card-text');
@@ -145,6 +146,16 @@ function adjustFontSize(change) {
     // Aplicar o novo tamanho aos elementos de texto
     textElements.forEach((element) => {
         element.style.fontSize = `${currentFontSize}px`;
+        points.textContent = `Size: ${currentFontSize}px`;
+        
+        if (currentFontSize === 32){
+            points.textContent = `Size: ${currentFontSize}px (max size)`;
+        }
+
+        if (currentFontSize === 16){
+            points.textContent = `Size: ${currentFontSize}px (min size)`;
+        }
+        
     });
 }
 
