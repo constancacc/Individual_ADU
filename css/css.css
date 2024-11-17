@@ -155,10 +155,18 @@ footer{
   width: 12%;
 }
 
-.reader-settings > h1 {
+.reader-settings > h2, .reader-settings > h1 {
   font-size: 20px;
   text-align: center;
 }
+
+#menos-tamanho{
+  font-size: 19px;
+}
+#mais-tamanho{
+  font-size: 30px;
+}
+
 
 /* Layout de duas colunas */
 .reader-settings .button-group {
@@ -175,7 +183,7 @@ footer{
   height: 80px;
   border: none;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 20px;
   cursor: pointer;
 }
 
@@ -190,3 +198,11 @@ footer{
 
 }
 
+.reader-settings button:hover{
+  background-color: white;
+  color: var(--background);
+}
+.reader-settings button.double-width:hover{
+  background-color: var(--background);
+  color: white;
+}
