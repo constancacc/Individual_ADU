@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Referências para os botões de aumentar e diminuir o tamanho do texto
-    const btnAumentar = document.getElementById('botao-mais-tamanho');
-    const btnDiminuir = document.getElementById('botao-menos-tamanho');
+    const btnAumentar = document.getElementById('botao-menos-tamanho');
+    const btnDiminuir = document.getElementById('botao-mais-tamanho');
     const pontos = document.getElementById('points'); // Mostra o tamanho atual da fonte
     const textosCard = document.querySelectorAll('.card-text'); // Seleciona todos os textos do card
 
@@ -30,6 +30,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         // Atualiza o texto que exibe o tamanho atual da fonte
         pontos.textContent = `Size: ${tamanhoFonteAtual}px`;
+
+        if(tamanhoFonteAtual === 14){
+            pontos.textContent = `Size: ${tamanhoFonteAtual}px (min size)`;
+        }
+
+        if(tamanhoFonteAtual === 20){
+            pontos.textContent = `Size: ${tamanhoFonteAtual}px (max size)`;
+        }
         // Atualiza a exibição do nome da fonte
         document.getElementById('font-name').textContent = `Current font: ${familiaFonteAtual}`;
     }
@@ -44,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Função para diminuir o tamanho da fonte
     btnDiminuir.addEventListener('click', function() {
-        if (tamanhoFonteAtual > 12) { // Impede que o tamanho da fonte fique abaixo de 12px
+        if (tamanhoFonteAtual > 14) { // Impede que o tamanho da fonte fique abaixo de 12px
             tamanhoFonteAtual -= 1; // Diminui 1px no tamanho
             atualizarFonte(); // Atualiza o tamanho da fonte
         }
