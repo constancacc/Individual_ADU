@@ -16,7 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const section = document.querySelector('.reader');
             const textos = section.querySelectorAll('.card-text');
             const linkText = document.getElementById('link-text');
-            const myLink = document.querySelector('#back-btn'); // Substitua pelo seu seletor de link específico
+            const Back = document.querySelector('#back-btn'); // Substitua pelo seu seletor de link específico
+            const breadcrumb = document.querySelectorAll('.bread-crumb')
 
             let currentIndex = 0;
             let isPlaying = false;
@@ -61,6 +62,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     window.speechSynthesis.speak(utterance);
                 }
             }
+            Back.addEventListener('click', (event) => {
+                stopReading();
+            });
+            
+            breadcrumb.forEach(element => {
+                element.addEventListener('click', (event) => {
+                    stopReading();  // Chama a função para parar a leitura
+                });
+            });            
+           
 
             // Função para mostrar o link final
             function showFinalLink() {
