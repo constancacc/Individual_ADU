@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Função para diminuir o tamanho da fonte
     btnDiminuir.addEventListener('click', function() {
-        if (tamanhoFonteAtual > 14) { // Impede que o tamanho da fonte fique abaixo de 12px
+        if (tamanhoFonteAtual > 14) { // Impede que o tamanho da fonte fique abaixo de 14px
             tamanhoFonteAtual -= 1; // Diminui 1px no tamanho
             atualizarFonte(); // Atualiza o tamanho da fonte
         }
@@ -71,141 +71,165 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Atualiza o tamanho inicial da fonte ao carregar a página
     atualizarFonte();
-});
 
-function lerTextoCard() {
-    // Verifica se o navegador suporta Speech Synthesis
-    if ('speechSynthesis' in window) {
-        // Seleciona os elementos de texto que irão ser lidos
-        const section = document.querySelector('.full-card-content');
-        const textos = section.querySelectorAll('.card-text'); // Seleciona os elementos <p> da descrição
+    // ============================================
+    // CONTROLE DE VELOCIDADE
+    // ============================================
+    let speechRate = 1; // Velocidade inicial da leitura (1 é a velocidade normal)
 
-        // Cria uma lista de utterances com cada frase da descrição
-        const utterances = Array.from(textos).map(texto => {
-            return new SpeechSynthesisUtterance(texto.textContent);
-        });
+    // Cria e exibe a velocidade atual na página
+    const speedDisplay = document.createElement('p');
+    speedDisplay.id = "speed-display";
+    speedDisplay.textContent = `Speed: ${speechRate.toFixed(1)}x`;
+    document.querySelector('.reader-settings').appendChild(speedDisplay);
 
-        // Configurações para cada utterance
-        utterances.forEach(utterance => {
-            utterance.lang = 'en-US'; // Define o idioma para inglês
-            utterance.rate = 1; // Velocidade da fala
-        });
+    // Função para ajustar a velocidade de leitura
+    function adjustSpeechRate(change) {
+        speechRate += change;
 
-        let currentIndex = 0; // Índice atual da leitura
-        let isPlaying = false; // Controla o estado de leitura
-        let currentUtterance = null; // Referência à utterance atual
+        // Garantir que a velocidade esteja dentro dos limites
+        if (speechRate < 0.5) speechRate = 0.5;
+        if (speechRate > 3) speechRate = 3;
 
-        // Função para adicionar o destaque ao texto
-        function highlightElement(element) {
-            element.classList.add('highlight');
-        }
-
-        // Função para remover o destaque do texto
-        function removeHighlight(element) {
-            element.classList.remove('highlight');
-        }
-
-        // Função para iniciar a leitura do elemento atual
-        function startReadingCurrent() {
-            if (currentIndex >= 0 && currentIndex < utterances.length) {
-                const utterance = utterances[currentIndex];
-                currentUtterance = utterance;
-
-                // Remove qualquer destaque anterior
-                textos.forEach(removeHighlight);
-
-                // Destaca o texto atual
-                highlightElement(textos[currentIndex]);
-
-                // Quando terminar de ler, avança para o próximo texto
-                utterance.onend = () => {
-                    removeHighlight(textos[currentIndex]); // Remove o destaque ao terminar
-                    currentIndex++;
-                    if (currentIndex < utterances.length && isPlaying) {
-                        startReadingCurrent();
-                    } else if (currentIndex >= utterances.length) {
-                        // Finaliza a leitura e prepara para reiniciar
-                        isPlaying = false;
-                        togglePlayPauseButton(false);
-                        currentIndex = utterances.length; // Mantém o índice no fim
-                    }
-                };
-
-                // Inicia a leitura do utterance atual
-                window.speechSynthesis.speak(utterance);
-            }
-        }
-
-        // Função para alternar entre play/pause
-        function togglePlayPause() {
-            if (isPlaying) {
-                // Pausa a leitura
-                stopReading();
-            } else {
-                // Retoma ou reinicia a leitura
-                if (currentIndex >= utterances.length) {
-                    // Reinicia do início se todas as frases já foram lidas
-                    currentIndex = 0;
-                }
-                startReadingCurrent();
-            }
-            isPlaying = !isPlaying;
-            togglePlayPauseButton(isPlaying);
-        }
-
-        // Função para parar a leitura
-        function stopReading() {
-            window.speechSynthesis.cancel();
-            textos.forEach(removeHighlight); // Remove todos os destaques
-        }
-
-        // Atualiza o ícone do botão Play/Pause
-        function togglePlayPauseButton(isPlaying) {
-            const playPauseButton = document.querySelector('.play-pause img');
-            if (isPlaying) {
-                playPauseButton.src = "../img/Pause.png"; // Troca a imagem para "Pause"
-                playPauseButton.alt = "Pause"; // Troca o alt para "Pause"
-            } else {
-                playPauseButton.src = "../img/Play.png"; // Troca a imagem para "Play"
-                playPauseButton.alt = "Play"; // Troca o alt para "Play"
-            }
-        }
-
-        // Função para avançar para o próximo elemento
-        function nextElement() {
-            if (currentIndex < utterances.length - 1) {
-                stopReading(); // Para a leitura atual
-                currentIndex++; // Avança para o próximo índice
-                if (isPlaying) {
-                    startReadingCurrent(); // Reinicia a leitura
-                }
-            }
-        }
-
-        // Função para voltar ao elemento anterior
-        function previousElement() {
-            if (currentIndex > 0) {
-                stopReading(); // Para a leitura atual
-                currentIndex--; // Volta para o índice anterior
-                if (isPlaying) {
-                    startReadingCurrent(); // Reinicia a leitura
-                }
-            }
-        }
-
-        // Seleciona os botões existentes
-        const playPauseButton = document.querySelector('.play-pause img');
-        const btnNext = document.querySelector('.next');
-        const btnPrevious = document.querySelector('.previous');
-
-        // Associa as funções aos botões
-        playPauseButton.parentNode.onclick = togglePlayPause; // Play/Pause
-        btnNext.onclick = nextElement; // Avançar
-        btnPrevious.onclick = previousElement; // Retroceder
-    } else {
-        alert("Desculpe, seu navegador não suporta leitura de texto.");
+        // Atualizar o texto de exibição da velocidade
+        speedDisplay.textContent = `Speed: ${speechRate.toFixed(1)}x`;
     }
-}
 
-// Chama a função de leitura quando a página carrega
-window.onload = lerTextoCard;
+    // Função para diminuir a velocidade da leitura
+    document.getElementById('menos-speed').addEventListener('click', function() {
+        if (speechRate > 0.5) { // Impede que a velocidade seja menor que 0.5
+            adjustSpeechRate(-0.1); // Diminui 0.1 na velocidade
+        }
+    });
+
+    // Função para aumentar a velocidade da leitura
+    document.getElementById('mais-speed').addEventListener('click', function() {
+        if (speechRate < 3) { // Impede que a velocidade seja maior que 3
+            adjustSpeechRate(0.1); // Aumenta 0.1 na velocidade
+        }
+    });
+
+    // Função para iniciar a leitura do conteúdo
+    function lerTextoCard() {
+        if ('speechSynthesis' in window) {
+            const section = document.querySelector('.full-card-content');
+            const textos = section.querySelectorAll('.card-text'); // Seleciona os elementos <p> da descrição
+
+            const utterances = Array.from(textos).map(texto => {
+                const utterance = new SpeechSynthesisUtterance(texto.textContent);
+                utterance.lang = 'en-US'; // Define o idioma para inglês
+                utterance.rate = speechRate; // Define a velocidade da fala para a primeira frase
+                return utterance;
+            });
+
+            let currentIndex = 0;
+            let isPlaying = false;
+
+            // Função para adicionar o destaque ao texto
+            function highlightElement(element) {
+                element.classList.add('highlight');
+            }
+
+            // Função para remover o destaque do texto
+            function removeHighlight(element) {
+                element.classList.remove('highlight');
+            }
+
+            // Função para iniciar a leitura do elemento atual
+            function startReadingCurrent() {
+                if (currentIndex >= 0 && currentIndex < utterances.length) {
+                    const utterance = utterances[currentIndex];
+                    utterance.rate = speechRate; // Garante que a velocidade será atualizada para cada frase
+                    window.speechSynthesis.speak(utterance);
+
+                    // Remove qualquer destaque anterior
+                    textos.forEach(removeHighlight);
+
+                    // Destaca o texto atual
+                    highlightElement(textos[currentIndex]);
+
+                    // Quando terminar de ler, avança para o próximo texto
+                    utterance.onend = () => {
+                        removeHighlight(textos[currentIndex]); // Remove o destaque ao terminar
+                        currentIndex++;
+                        if (currentIndex < utterances.length && isPlaying) {
+                            startReadingCurrent();
+                        } else if (currentIndex >= utterances.length) {
+                            isPlaying = false;
+                            togglePlayPauseButton(false);
+                        }
+                    };
+                }
+            }
+
+            // Função para alternar entre play/pause
+            function togglePlayPause() {
+                if (isPlaying) {
+                    stopReading();
+                } else {
+                    if (currentIndex >= utterances.length) {
+                        currentIndex = 0;
+                    }
+                    startReadingCurrent();
+                }
+                isPlaying = !isPlaying;
+                togglePlayPauseButton(isPlaying);
+            }
+
+            // Função para parar a leitura
+            function stopReading() {
+                window.speechSynthesis.cancel();
+                textos.forEach(removeHighlight);
+            }
+
+            // Atualiza o ícone do botão Play/Pause
+            function togglePlayPauseButton(isPlaying) {
+                const playPauseButton = document.querySelector('.play-pause img');
+                if (isPlaying) {
+                    playPauseButton.src = "../img/Pause.png";
+                    playPauseButton.alt = "Pause";
+                } else {
+                    playPauseButton.src = "../img/Play.png";
+                    playPauseButton.alt = "Play";
+                }
+            }
+
+            // Função para avançar para o próximo elemento
+            function nextElement() {
+                if (currentIndex < utterances.length - 1) {
+                    stopReading();
+                    currentIndex++;
+                    if (isPlaying) {
+                        startReadingCurrent();
+                    }
+                }
+            }
+
+            // Função para voltar ao elemento anterior
+            function previousElement() {
+                if (currentIndex > 0) {
+                    stopReading();
+                    currentIndex--;
+                    if (isPlaying) {
+                        startReadingCurrent();
+                    }
+                }
+            }
+
+            // Seleciona os botões existentes
+            const playPauseButton = document.querySelector('.play-pause img');
+            const btnNext = document.querySelector('.next');
+            const btnPrevious = document.querySelector('.previous');
+
+            // Associa as funções aos botões
+            playPauseButton.parentNode.onclick = togglePlayPause; // Play/Pause
+            btnNext.onclick = nextElement; // Avançar
+            btnPrevious.onclick = previousElement; // Retroceder
+        } else {
+            alert("Desculpe, seu navegador não suporta leitura de texto.");
+        }
+    }
+
+    // Chama a função de leitura quando a página carrega
+    window.onload = lerTextoCard;
+});
