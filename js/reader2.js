@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let familiaFonteAtual = 'Verdana'; // Família de fonte inicial
 
     // Array de fontes disponíveis
-    const fontesDisponiveis = ['Verdana', 'Tahoma', 'Calibri', 'Helvetica', 'Arial', 'Times New Roman'];
+    const fontesDisponiveis = ['Verdana', 'Tahoma', 'Calibri', 'Helvetica', 'Times New Roman'];
 
     // Função para atualizar o tamanho da fonte e a família de fontes
     function atualizarFonte() {

@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function () {
     /*------ MUDAR A FONTE -----------*/
     const changeFontButton = document.querySelector('.double-width');
     const fontNameElement = document.querySelector('#font-name');
-    const fonts = ['Tahoma', 'Calibri', 'Helvetica', 'Arial', 'Verdana', 'Times New Roman'];
+    const fonts = ['Tahoma', 'Calibri', 'Helvetica', 'Verdana', 'Times New Roman'];
     let currentFontIndex = 0;
 
     // Função para mudar a fonte
