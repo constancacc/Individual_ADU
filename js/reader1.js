@@ -103,11 +103,11 @@ document.addEventListener('DOMContentLoaded', function () {
             function togglePlayPause() {
                 if (isPlaying) {
                     stopReading();
-                    playPauseButton.src = "../img/play.png";
+                    playPauseButton.src = "../img/Play.png";
                     playPauseButton.alt = "Play";
                 } else {
                     isPlaying = true;
-                    playPauseButton.src = "../img/pause.png";
+                    playPauseButton.src = "../img/Pause.png";
                     playPauseButton.alt = "Pause";
                     // Se estiver no final da leitura, reinicia do início
                     if (currentIndex >= textos.length) {
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
             function stopReading() {
                 window.speechSynthesis.cancel();
                 isPlaying = false;
-                playPauseButton.src = "../img/play.png";
+                playPauseButton.src = "../img/Play.png";
                 playPauseButton.alt = "Play";
             }
 
