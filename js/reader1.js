@@ -62,6 +62,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     window.speechSynthesis.speak(utterance);
                 }
             }
+
+            /*Parar a leitura quando muda de página*/
             Back.addEventListener('click', (event) => {
                 stopReading();
             });

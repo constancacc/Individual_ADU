@@ -111,6 +111,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Função para iniciar a leitura do conteúdo
     function lerTextoCard() {
+        const Back = document.querySelector('#back-btn'); // Substitua pelo seu seletor de link específico
+        const breadcrumb = document.querySelectorAll('.bread-crumb');
+        
         if ('speechSynthesis' in window) {
             const section = document.querySelector('.full-card-content');
             const textos = section.querySelectorAll('.card-text'); // Seleciona os elementos <p> da descrição
@@ -193,6 +196,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     playPauseButton.alt = "Play";
                 }
             }
+            
+             /*Parar a leitura quando muda de página*/
+             Back.addEventListener('click', (event) => {
+                stopReading();
+            });
+            
+            breadcrumb.forEach(element => {
+                element.addEventListener('click', (event) => {
+                    stopReading();  // Chama a função para parar a leitura
+                });
+            });            
 
             // Função para avançar para o próximo elemento
             function nextElement() {
