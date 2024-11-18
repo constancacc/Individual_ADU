@@ -263,3 +263,8 @@ filter:opacity(0.5);
   background-color: var(--background);
   color: white;
 }
+
+:focus {
+  outline: 5px solid  red; /* Cor verde e espessura de 2px */
+  outline-offset: 4px; /* Distância do contorno em relação ao elemento */
+}
