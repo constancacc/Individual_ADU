@@ -273,3 +273,8 @@ filter:opacity(0.5);
   outline: 5px solid  red; /* Cor verde e espessura de 2px */
   outline-offset: 4px; /* Distância do contorno em relação ao elemento */
 }
+
+
+.reader-settings > #card-link{
+  color: black;
+}
