@@ -1,7 +1,7 @@
 /*----------- index 2.html --------------*/
 
 :root {
-    --breadcrumb-color: #b6d3f2; /* Cor do breadcrumb */
+    --breadcrumb-color: white; /* Cor do breadcrumb */
     --background: rgb(54, 92, 140);
 }
 
@@ -69,16 +69,19 @@ nav[aria-label="breadcrumb"] ol {
   #screen-reader-page-btn {
     margin-top: 1em; /* Espaço entre o card e o botão */
     font-size: large; /* Mesmo tamanho de fonte do título */
-    background: white;
     border-radius: 1vw;
-    border:none;
     padding: 1vw;
     cursor: pointer;
+
+    color: var(--background);
+    background-color: white;
+    border: 2px solid var(--background);
     }
 
     #screen-reader-page-btn:hover{
-        background:var(--breadcrumb-color);
+        background-color: var(--background);
         color: white;
+        border: 2px solid white;
     }
 
  /*---- READER 1 ----------------*/
@@ -198,7 +201,7 @@ filter:opacity(0.5);
   display: flex;
   flex-direction: column; 
   gap: 5px; 
-  background-color: var(--breadcrumb-color);
+  background-color: #B6D3F2;
   border-radius: 1vw;
   padding: 1vw;
   width: 12%;
@@ -252,12 +255,14 @@ filter:opacity(0.5);
   text-align: center;
   color: var(--background);
   background-color: white;
+  border: 2px solid var(--background);
 
 }
 
 .reader-settings button:hover{
   background-color: white;
   color: var(--background);
+  border: 2px solid var(--background);
 }
 .reader-settings button.double-width:hover{
   background-color: var(--background);
