@@ -204,7 +204,9 @@ filter:opacity(0.5);
   width: 12%;
 
   position: absolute;
+
   right: 2vw;
+  bottom:5vw;
 }
 .reader-settings.active {
   visibility: visible;
