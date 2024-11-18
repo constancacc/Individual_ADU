@@ -105,10 +105,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     stopReading();
                     playPauseButton.src = "../img/Play.png";
                     playPauseButton.alt = "Play";
+                    playPauseButton.ariaLabel= "play button"
                 } else {
                     isPlaying = true;
                     playPauseButton.src = "../img/Pause.png";
                     playPauseButton.alt = "Pause";
+                    playPauseButton.ariaLabel= "pause button"
                     // Se estiver no final da leitura, reinicia do início
                     if (currentIndex >= textos.length) {
                         currentIndex = 0;
